@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://doc-orchestrator.example.com/schemas/docType.schema.json",
+  "title": "Document Type Configuration",
+  "description": "Schema for document type configuration files",
+  "type": "object",
+  "required": ["id", "name", "fields"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_-]+$",
+      "description": "Unique identifier for the document type"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the document type"
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of visual or content features for classification"
+    },
+    "fields": {
+      "type": "object",
+      "description": "Field definitions for extraction",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["string", "number", "integer", "boolean", "array", "object"],
+            "description": "Data type"
+          },
+          "required": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether the field is required"
+          },
+          "pattern": {
+            "type": "string",
+            "description": "Regular expression pattern for validation"
+          },
+          "format": {
+            "type": "string",
+            "description": "Format specification (e.g., date, email)"
+          },
+          "minimum": {
+            "type": "number",
+            "description": "Minimum value for numbers"
+          },
+          "maximum": {
+            "type": "number",
+            "description": "Maximum value for numbers"
+          },
+          "enum": {
+            "type": "array",
+            "description": "Allowed values"
+          },
+          "default": {
+            "description": "Default value"
+          },
+          "description": {
+            "type": "string",
+            "description": "Field description"
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "cross_checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "rule"],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "rule": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "normalization": {
+      "type": "object",
+      "description": "Field-specific normalization rules",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}
