@@ -1,0 +1,52 @@
+{
+  "paths": {
+    "input": "./input",
+    "output": "./output",
+    "docTypes": "./config/docTypes",
+    "schemas": "./config/schema"
+  },
+  "stages": {
+    "rasterize": {
+      "enabled": true,
+      "dpi": {
+        "router": 100,
+        "extractor": 300
+      },
+      "tool": "pdftoppm"
+    },
+    "classify": {
+      "enabled": true,
+      "model": {
+        "type": "local",
+        "name": "llava:7b",
+        "endpoint": "http://localhost:11434"
+      }
+    },
+    "extract": {
+      "enabled": true,
+      "model": {
+        "type": "local",
+        "name": "llava:13b",
+        "endpoint": "http://localhost:11434"
+      }
+    },
+    "validate": {
+      "enabled": true,
+      "strict": true
+    },
+    "normalize": {
+      "enabled": true
+    },
+    "verify": {
+      "enabled": true
+    }
+  },
+  "naming": {
+    "pattern": "<doc_type>_<timestamp>_<seq>",
+    "timestamp_format": "YYYYMMDD_HHmmss"
+  },
+  "logging": {
+    "level": "info",
+    "output": "./logs"
+  }
+}
