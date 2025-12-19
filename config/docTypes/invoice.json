@@ -1,0 +1,74 @@
+{
+  "id": "invoice",
+  "name": "Счёт (инвойс)",
+  "description": "Счёт на оплату товаров и услуг",
+  "features": [
+    "содержит номер счёта",
+    "содержит дату",
+    "содержит данные поставщика и покупателя",
+    "содержит таблицу с позициями",
+    "содержит итоговую сумму"
+  ],
+  "fields": {
+    "invoice_number": {
+      "type": "string",
+      "required": true,
+      "pattern": "^[0-9\\-/]+$",
+      "description": "Номер счёта"
+    },
+    "invoice_date": {
+      "type": "string",
+      "required": true,
+      "format": "date",
+      "description": "Дата счёта"
+    },
+    "supplier_name": {
+      "type": "string",
+      "required": true,
+      "description": "Наименование поставщика"
+    },
+    "supplier_inn": {
+      "type": "string",
+      "required": false,
+      "pattern": "^[0-9]{10}$|^[0-9]{12}$",
+      "description": "ИНН поставщика"
+    },
+    "customer_name": {
+      "type": "string",
+      "required": true,
+      "description": "Наименование покупателя"
+    },
+    "customer_inn": {
+      "type": "string",
+      "required": false,
+      "pattern": "^[0-9]{10}$|^[0-9]{12}$",
+      "description": "ИНН покупателя"
+    },
+    "total_amount": {
+      "type": "number",
+      "required": true,
+      "minimum": 0,
+      "description": "Итоговая сумма"
+    },
+    "currency": {
+      "type": "string",
+      "required": false,
+      "enum": ["RUB", "USD", "EUR"],
+      "default": "RUB",
+      "description": "Валюта"
+    }
+  },
+  "validation": {
+    "cross_checks": [
+      {
+        "name": "inn_format",
+        "rule": "supplier_inn and customer_inn must be valid INN"
+      }
+    ]
+  },
+  "normalization": {
+    "invoice_number": "trim, uppercase",
+    "invoice_date": "parse_date, iso_format",
+    "total_amount": "parse_number, round_2_decimals"
+  }
+}
