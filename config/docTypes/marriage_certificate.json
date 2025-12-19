@@ -1,0 +1,30 @@
+{
+  "id": "marriage_certificate",
+  "name": "Свидетельство о заключении брака",
+  "description": "Свидетельство о заключении брака РФ (повторное или первичное)",
+  "extraction": {
+    "prompt": "Извлеки данные из свидетельства о браке. Верни JSON с полями: husband (surname, name, patronymic), wife (surname, name, patronymic), marriage_date (дата заключения брака), record_number (номер записи акта), registration_place (место регистрации), issue_date (дата выдачи).",
+    "fields": [
+      { "id": "husband_surname", "label": "Фамилия мужа", "type": "string" },
+      { "id": "husband_name", "label": "Имя мужа", "type": "string" },
+      { "id": "wife_surname", "label": "Фамилия жены", "type": "string" },
+      { "id": "wife_name", "label": "Имя жены", "type": "string" },
+      { 
+        "id": "marriage_date", 
+        "label": "Дата заключения брака", 
+        "type": "date",
+        "format": "DD.MM.YYYY"
+      },
+      { 
+        "id": "record_number", 
+        "label": "Номер записи акта", 
+        "type": "string",
+        "validation": "^\\d+$" 
+      }
+    ]
+  },
+  "normalization": {
+    "uppercase": ["husband_surname", "wife_surname"],
+    "date_format": "YYYY-MM-DD"
+  }
+}

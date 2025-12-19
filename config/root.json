@@ -1,52 +1,30 @@
 {
   "paths": {
     "input": "./input",
-    "output": "./output",
-    "docTypes": "./config/docTypes",
-    "schemas": "./config/schema"
+    "staging": "./staging",
+    "output": "./output"
   },
-  "stages": {
-    "rasterize": {
-      "enabled": true,
-      "dpi": {
-        "router": 100,
-        "extractor": 300
+  "rasterize": {
+    "enabled": true,
+    "concurrency": 2,
+    "resolutions": [
+      {
+        "dpi": 100,
+        "quality": 65,
+        "lossless": false,
+        "folder": "r100"
       },
-      "tool": "pdftoppm"
-    },
-    "classify": {
-      "enabled": true,
-      "model": {
-        "type": "local",
-        "name": "llava:7b",
-        "endpoint": "http://localhost:11434"
+      {
+        "dpi": 300,
+        "quality": 100,
+        "lossless": true,
+        "folder": "r300"
       }
-    },
-    "extract": {
-      "enabled": true,
-      "model": {
-        "type": "local",
-        "name": "llava:13b",
-        "endpoint": "http://localhost:11434"
-      }
-    },
-    "validate": {
-      "enabled": true,
-      "strict": true
-    },
-    "normalize": {
-      "enabled": true
-    },
-    "verify": {
-      "enabled": true
-    }
+    ]
   },
-  "naming": {
-    "pattern": "<doc_type>_<timestamp>_<seq>",
-    "timestamp_format": "YYYYMMDD_HHmmss"
-  },
-  "logging": {
-    "level": "info",
-    "output": "./logs"
+  "vlm": {
+    "baseUrl": "http://127.0.0.1:1234/v1",
+    "model": "qwen/qwen3-v1-2b",
+    "timeout": 30000
   }
 }

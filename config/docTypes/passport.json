@@ -1,0 +1,53 @@
+{
+  "id": "passport",
+  "name": "Паспорт РФ",
+  "description": "Основной разворот паспорта гражданина РФ (страницы 2-3)",
+  "extraction": {
+    "prompt": "Извлеки данные из разворота паспорта РФ. Верни результат строго в формате JSON. Если поле неразборчиво, напиши null. Поля: фамилия, имя, отчество, серия, номер, дата рождения, место рождения, пол, дата выдачи, кем выдан, код подразделения.",
+    "fields": [
+      {
+        "id": "surname",
+        "label": "Фамилия",
+        "type": "string"
+      },
+      {
+        "id": "name",
+        "label": "Имя",
+        "type": "string"
+      },
+      {
+        "id": "patronymic",
+        "label": "Отчество",
+        "type": "string"
+      },
+      {
+        "id": "series",
+        "label": "Серия",
+        "type": "string",
+        "validation": "^\\d{4}$"
+      },
+      {
+        "id": "number",
+        "label": "Номер",
+        "type": "string",
+        "validation": "^\\d{6}$"
+      },
+      {
+        "id": "birth_date",
+        "label": "Дата рождения",
+        "type": "date",
+        "format": "DD.MM.YYYY"
+      },
+      {
+        "id": "department_code",
+        "label": "Код подразделения",
+        "type": "string",
+        "validation": "^\\d{3}-\\d{3}$"
+      }
+    ]
+  },
+  "normalization": {
+    "uppercase": ["surname", "name", "patronymic"],
+    "clean_series": true
+  }
+}
