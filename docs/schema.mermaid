@@ -1,0 +1,20 @@
+graph TD
+    A[Input: PDF/Folders] -->|Stage 1: Ingest| B(Rasterizer: Pyramid 100-300 DPI)
+    B --> C{Stage 2: Router 2B}
+    C -->|Single Doc| D[DocType Assigned]
+    C -->|Multi Doc| E[Flag: needs_splitting]
+    
+    E -->|Stage 3: Splitter SAGE 4B| F(Sharp: Cropping to Sub-Docs)
+    F --> D
+    
+    D -->|Stage 4: Enhancer| G(Sharp: Deskew/Contrast)
+    
+    G --> H{Stage 5: Extraction SAGE/8B}
+    H -->|Lab Mode| I[Test all DPIs 100-300]
+    H -->|Prod Mode| J[Use Target DPI from config]
+    
+    I --> K[Stage 6: Evaluator]
+    J --> K
+    
+    K -->|Compare with Reference| L(Manifest: Accuracy & Timing)
+    L --> M[Final Reports/Statistics]
