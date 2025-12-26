@@ -2,11 +2,15 @@
   "name": "doc-orchestrator",
   "version": "1.0.0",
   "type": "module",
+  "scripts": {
+    "assemble": "node src/stages/assemble-input.js"
+  },
   "dependencies": {
-    "fs-extra": "^11.2.0",
-    "pdfjs-dist": "^4.0.379",
     "@napi-rs/canvas": "^0.1.44",
-    "sharp": "^0.33.2",
-    "p-queue": "^8.0.1"
+    "fs-extra": "^11.2.0",
+    "p-queue": "^8.0.1",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^4.0.379",
+    "sharp": "^0.33.2"
   }
 }
